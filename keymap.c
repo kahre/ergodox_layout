@@ -22,20 +22,23 @@
 #define MACRO_SE_AND   M(13) // Macro for &
 #define MACRO_SE_BSLSH M(14) // Macro for backslash
 #define MACRO_IJ_GEN_M M(15) // Macro intellij for generating methods
-#define MACRO_IJ_CMNT  M(16) // Macro intellij for comment
-#define MACRO_IJ_BCMNT M(17) // Macro intellij for block comment
-#define MACRO_IJ_BACK  M(18) // Macro intellij for going back in the visited history
-#define MACRO_IJ_FRWRD M(19) // Macro intellij for going forward in the visited history
-#define MACRO_IJ_TEST  M(20) // Macro intellij for generating test
-#define MACRO_IJ_TGL_T M(21) // Macro intellij for toggling tool views
-#define MACRO_IJ_SRND  M(22) // Macro intellij for surround with
-#define MACRO_IJ_EXT_M M(23) // Macro intellij for extract method
-#define MACRO_IJ_EXT_V M(24) // Macro intellij for extract variable
-#define MACRO_IJ_EXT_C M(25) // Macro intellij for extract property
-#define MACRO_VM_LN_UP M(26) // Macro vim for moving line up
-#define MACRO_VM_LN_DN M(27) // Macro vim for moving line down
-#define MACRO_VM_DUPLN M(28) // Macro vim for duplicating current line
-#define MACRO_VM_PASTE M(29) // Macro vim for duplicating current line
+#define MACRO_IJ_GEN_C M(16) // Macro intellij for generating methods
+#define MACRO_IJ_GENGS M(17) // Macro intellij for generating methods
+#define MACRO_IJ_CMNT  M(18) // Macro intellij for comment
+#define MACRO_IJ_BCMNT M(19) // Macro intellij for block comment
+#define MACRO_IJ_BACK  M(20) // Macro intellij for going back in the visited history
+#define MACRO_IJ_FRWRD M(21) // Macro intellij for going forward in the visited history
+#define MACRO_IJ_TEST  M(22) // Macro intellij for generating test
+#define MACRO_IJ_TGL_T M(23) // Macro intellij for toggling tool views
+#define MACRO_IJ_SRND  M(24) // Macro intellij for surround with
+#define MACRO_IJ_EXT_M M(25) // Macro intellij for extract method
+#define MACRO_IJ_EXT_V M(26) // Macro intellij for extract variable
+#define MACRO_IJ_EXT_C M(27) // Macro intellij for extract property
+#define MACRO_VM_LN_UP M(28) // Macro vim for moving line up
+#define MACRO_VM_LN_DN M(29) // Macro vim for moving line down
+#define MACRO_VM_DUPLN M(30) // Macro vim for duplicating current line
+#define MACRO_VM_PASTE M(31) // Macro vim for duplicating current line
+#define MACRO_IJ_GENAL M(32) // Macro vim for duplicating current line
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
@@ -173,14 +176,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * ,--------------------------------------------------.           ,--------------------------------------------------.
    * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-   * |        |      |      |      |      | IJTst|      |           |      |      |      |      |      |VIMPST|        |
+   * |        |      |      |IJGenC|IJGeSe| IJTst|      |           |      |      |      |      |      |VIMPST|        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
    * |        |      |IJSrnd|VIMDUP|IJExtC| IJGen|------|           |------|IJTGLV|      |      |      |      |        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
    * |        |      |      |IJCMNT|IJEXTV|IJBCMT|      |           |      |      |IJEXTM|      |      |      |        |
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-   *   |      |      |      |IJBACK|IJFWRD|                                       |VIMLNU|VIMLND|      |      |      |
-   *   `----------------------------------'                                       `----------------------------------'
+   *   |      |      |      |IJBACK|IJFWRD|                                       |VIMLNU|VIMLND|      |      |IJGenAll|
+   *   `----------------------------------'                                       `------------------------------------'
    *                                        ,-------------.       ,-------------.
    *                                        |      |      |       |      |      |
    *                                 ,------|------|------|       |------+------+------.
@@ -192,7 +195,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Specials / Macro layer
   [SPEC] = KEYMAP(
                   KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MACRO_IJ_TEST, KC_TRNS,
+                  KC_TRNS, KC_TRNS, KC_TRNS, MACRO_IJ_GEN_C, MACRO_IJ_GENGS, MACRO_IJ_TEST, KC_TRNS,
                   KC_TRNS, KC_TRNS, MACRO_IJ_SRND, MACRO_VM_DUPLN, MACRO_IJ_EXT_C, MACRO_IJ_GEN_M,
                   KC_TRNS, KC_TRNS, KC_TRNS, MACRO_IJ_CMNT, MACRO_IJ_EXT_V, MACRO_IJ_BCMNT, KC_TRNS,
                   KC_TRNS, KC_TRNS, KC_TRNS, MACRO_IJ_BACK, MACRO_IJ_FRWRD,
@@ -204,7 +207,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   KC_TRNS,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, MACRO_VM_PASTE, KC_TRNS,
                   MACRO_IJ_TGL_T,  KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
                   KC_TRNS,  KC_TRNS, MACRO_IJ_EXT_M, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,
-                  MACRO_VM_LN_UP,  MACRO_VM_LN_DN, KC_TRNS, KC_TRNS, KC_TRNS,
+                  MACRO_VM_LN_UP,  MACRO_VM_LN_DN, KC_TRNS, KC_TRNS, MACRO_IJ_GENAL,
                   KC_TRNS,  KC_TRNS,
                   KC_TRNS,
                   KC_TRNS, KC_TRNS, KC_WBAK
@@ -227,20 +230,23 @@ enum macro_id {
   SE_AND   = 13, // Macro for &
   SE_BSLSH = 14, // Macro for backslash
   IJ_GEN_M = 15, // Macro for intellij generating methods
-  IJ_CMNT  = 16, // Macro for intellij comment
-  IJ_BCMNT = 17, // Macro for intellij block comment
-  IJ_BACK  = 18, // Macro for intellij going back in the visited history
-  IJ_FRWRD = 19, // Macro for intellij going forward in the visited history
-  IJ_TEST  = 20, // Macro for intellij generating test
-  IJ_TGL_T = 21, // Macro for intellij toggling tool views
-  IJ_SRND  = 22, // Macro for intellij surround with
-  IJ_EXT_M = 23, // Macro for intellij backslash
-  IJ_EXT_V = 24, // Macro for intellij backslash
-  IJ_EXT_C = 25, // Macro for intellij backslash
-  VM_LN_UP = 26, // Macro for vim moving line up
-  VM_LN_DN = 27, // Macro for vim moving line down
-  VM_DUPLN = 28, // Macro for vim duplicating current line
-  VM_PASTE = 29  // Macro for vim paste
+  IJ_GEN_C = 16, // Macro for intellij generate constructor
+  IJ_GENGS = 17, // Macro for intellij generate getters/setters
+  IJ_CMNT  = 18, // Macro for intellij comment
+  IJ_BCMNT = 19, // Macro for intellij block comment
+  IJ_BACK  = 20, // Macro for intellij going back in the visited history
+  IJ_FRWRD = 21, // Macro for intellij going forward in the visited history
+  IJ_TEST  = 22, // Macro for intellij generating test
+  IJ_TGL_T = 23, // Macro for intellij toggling tool views
+  IJ_SRND  = 24, // Macro for intellij surround with
+  IJ_EXT_M = 25, // Macro for intellij backslash
+  IJ_EXT_V = 26, // Macro for intellij backslash
+  IJ_EXT_C = 27, // Macro for intellij backslash
+  VM_LN_UP = 28, // Macro for vim moving line up
+  VM_LN_DN = 29, // Macro for vim moving line down
+  VM_DUPLN = 30, // Macro for vim duplicating current line
+  VM_PASTE = 31, // Macro for vim paste
+  IJ_GENAL = 32  // Macro for intellij generate toString and equals/hashcode
 };
 
 const uint16_t PROGMEM fn_actions[] = {
@@ -289,6 +295,20 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return (event.pressed ? MACRO( D(RALT), T(MINS), U(RALT), END ) : MACRO_NONE);
   case IJ_GEN_M:
     return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), END ) : MACRO_NONE);
+  case IJ_GEN_C:
+    return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(ENT), END ) : MACRO_NONE);
+  case IJ_GENGS:
+    return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(DOWN), T(DOWN), T(DOWN), T(ENT), END ) : MACRO_NONE);
+  case IJ_GENAL:
+    return (event.pressed ? MACRO(D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
+                                  T(DOWN), W(100), T(DOWN), W(100), T(ENT), W(100), T(ENT), W(100),
+                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
+                                  T(DOWN), W(100), T(ENT), W(100), T(ENT), W(100), T(ENT), W(100), T(ENT), W(200),
+                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
+                                  T(ENT), W(100), D(LCTRL), W(100), T(A), W(100), U(LCTRL), W(100), T(ENT), W(100),
+                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100),
+                                  T(ENT), W(100), D(LCTRL), W(100), T(A), W(100), U(LCTRL), W(100), T(ENT), W(100),
+                                  END ) : MACRO_NONE);
   case IJ_CMNT:
     return (event.pressed ? MACRO( D(LCTRL), T(PSLS), U(LCTRL), END ) : MACRO_NONE);
   case IJ_BCMNT:
@@ -340,7 +360,7 @@ void matrix_scan_user(void) {
     ergodox_right_led_1_on();
     break;
   case MDIA: // 2
-      ergodox_right_led_2_on();
+    ergodox_right_led_2_on();
     break;
   case SPEC: // 3
     ergodox_right_led_3_on();
