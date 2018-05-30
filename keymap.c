@@ -375,10 +375,6 @@ void matrix_scan_user(void) {
 };
 
 void led_set_user(uint8_t led) {
-  if(led & (1 << USB_LED_CAPS_LOCK)) {
-    caps = true;
-  } else {
-    caps = false;
-  }
+  caps = led & (1 << USB_LED_CAPS_LOCK);
 }
 
