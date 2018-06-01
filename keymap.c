@@ -8,6 +8,7 @@
 #define SYMB 1 // symbols
 #define MDIA 2 // media keys
 #define SPEC 3 // macro layer
+#define MOVE 4 // movement layer
 
 // Custom macro defines
 #define MACRO_SE_GRV   M(1)  // Macro for `
@@ -29,45 +30,49 @@
 #define MACRO_VM_LN_UP M(17) // Macro vim for moving line up
 #define MACRO_VM_LN_DN M(18) // Macro vim for moving line down
 #define MACRO_VM_DUPLN M(19) // Macro vim for duplicating current line
-#define MACRO_VM_PASTE M(20) // Macro vim for duplicating current line
-#define MACRO_IJ_GENAL M(21) // Macro vim for duplicating current line
+#define MACRO_VM_PASTE M(20) // Macro vim paste
+#define MACRO_VM_SEMI M(21) // Macro for vim append semicolon
+#define MACRO_VM_TOP M(22) // Macro for vim append semicolon
+#define MACRO_VM_BTM M(23) // Macro for vim append semicolon
+#define MACRO_VM_START M(24) // Macro for vim append semicolon
+#define MACRO_VM_END M(25) // Macro for vim append semicolon
 
 #ifdef SWAP_HANDS_ENABLE
-    __attribute__ ((weak))
-    // swap-hands action needs a matrix to define the swap
-    const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
-      /* Left hand, matrix positions */
-      {{0,13}, {1,13}, {2,13}, {3,13}, {4,13}, {5,13}},
-      {{0,12}, {1,12}, {2,12}, {3,12}, {4,12}, {5,12}},
-      {{0,11}, {1,11}, {2,11}, {3,11}, {4,11}, {5,11}},
-      {{0,10}, {1,10}, {2,10}, {3,10}, {4,10}, {5,10}},
-      {{0,9}, {1,9}, {2,9}, {3,9}, {4,9}, {5,9}},
-      {{0,8}, {1,8}, {2,8}, {3,8}, {4,8}, {5,8}},
-      {{0,7}, {1,7}, {2,7}, {3,7}, {4,7}, {5,7}},
-      /* Right hand, matrix positions */
-      {{0,6}, {1,6}, {2,6}, {3,6}, {4,6}, {5,6}},
-      {{0,5}, {1,5}, {2,5}, {3,5}, {4,5}, {5,5}},
-      {{0,4}, {1,4}, {2,4}, {3,4}, {4,4}, {5,4}},
-      {{0,3}, {1,3}, {2,3}, {3,3}, {4,3}, {5,3}},
-      {{0,2}, {1,2}, {2,2}, {3,2}, {4,2}, {5,2}},
-      {{0,1}, {1,1}, {2,1}, {3,1}, {4,1}, {5,1}},
-      {{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {5,0}},
-    };
+      __attribute__ ((weak))
+      // swap-hands action needs a matrix to define the swap
+        const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
+        /* Left hand, matrix positions */
+        {{0,13}, {1,13}, {2,13}, {3,13}, {4,13}, {5,13}},
+        {{0,12}, {1,12}, {2,12}, {3,12}, {4,12}, {5,12}},
+        {{0,11}, {1,11}, {2,11}, {3,11}, {4,11}, {5,11}},
+        {{0,10}, {1,10}, {2,10}, {3,10}, {4,10}, {5,10}},
+        {{0,9}, {1,9}, {2,9}, {3,9}, {4,9}, {5,9}},
+        {{0,8}, {1,8}, {2,8}, {3,8}, {4,8}, {5,8}},
+        {{0,7}, {1,7}, {2,7}, {3,7}, {4,7}, {5,7}},
+        /* Right hand, matrix positions */
+        {{0,6}, {1,6}, {2,6}, {3,6}, {4,6}, {5,6}},
+        {{0,5}, {1,5}, {2,5}, {3,5}, {4,5}, {5,5}},
+        {{0,4}, {1,4}, {2,4}, {3,4}, {4,4}, {5,4}},
+        {{0,3}, {1,3}, {2,3}, {3,3}, {4,3}, {5,3}},
+        {{0,2}, {1,2}, {2,2}, {3,2}, {4,2}, {5,2}},
+        {{0,1}, {1,1}, {2,1}, {3,1}, {4,1}, {5,1}},
+        {{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {5,0}},
+      };
 #endif
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
    *
    * ,--------------------------------------------------.           ,--------------------------------------------------.
-   * |  Grv   |   1  |   2  |   3  |   4  |   5  | Mute |           |  =   |   6  |   7  |   8  |   9  |   0  |   -    |
+   * |  Grv   |   1  |   2  |   3  |   4  |   5  | Mute |           |  ´   |   6  |   7  |   8  |   9  |   0  |   +    |
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
-   * |  Tab   |   Q  |   W  |   E  |   R  |   T  | ~L3  |           | ~L3  |   Y  |   U  |   I  |   O  |   P  |   Å    |
+   * |Tab/~L1 |   Q  |   W  |   E  |   R  |   T  | ~L3  |           | ~L3  |   Y  |   U  |   I  |   O  |   P  |   Å    |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-   * |  ~L1   |   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  | Ö/ L2| Ä/ Cmd |
+   * |CAPS/~L4|   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |Ö/~L2 | Ä/Cmd  |
    * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
    * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| '/Rsft |
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-   *   |Alt   |  \   | Lgui | Left | Right|                                       |  Up  | Down |   ;  |Ralt/¨| ~L1  |
+   *   |Alt   | <|>  | Lgui | Left | Right|                                       |  Up  | Down | Ralt |   ¨  | ~L1  |
    *   `----------------------------------'                                       `----------------------------------'
    *                                        ,-------------.       ,--------------.
    *                                        | App  | Home |       | PgUp |  Alt   |
@@ -81,11 +86,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Otherwise, it needs KC_*
   [BASE] = KEYMAP(  // layer 0 : default
                   // left hand
-                  KC_GRV,         KC_1,         KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
-                  KC_TAB,         KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
-                  KC_FN1,         KC_A,         KC_S,    KC_D,    KC_F,    KC_G,
-                  KC_LSFT,        CTL_T(KC_Z),  KC_X,    KC_C,    KC_V,    KC_B,   ALL_T(KC_NO),
-                  KC_LALT,        KC_NUBS,      KC_LGUI, KC_LEFT, KC_RGHT,
+                  KC_GRV,          KC_1,         KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
+                  LT(SYMB, KC_TAB),KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
+                  LT(MOVE, KC_CAPSLOCK),KC_A,     KC_S,    KC_D,    KC_F,    KC_G,
+                  KC_LSFT,         CTL_T(KC_Z),  KC_X,    KC_C,    KC_V,    KC_B,   ALL_T(KC_NO),
+                  KC_LALT,         KC_NUBS,      KC_LGUI, KC_LEFT, KC_RGHT,
 
                   ALT_T(KC_APP), KC_HOME,
                   KC_DELT,
@@ -96,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   MO(SPEC),     KC_Y,    KC_U,    KC_I,    KC_O,              KC_P,             KC_LBRC,
                   KC_H,         KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), GUI_T(KC_QUOT),
                   MEH_T(KC_NO), KC_N,    KC_M,    KC_COMM, KC_DOT,            CTL_T(KC_SLSH),   SFT_T(KC_BSLS),
-                  KC_UP,        KC_DOWN, LSFT(KC_COMM), ALGR_T(KC_RBRC), KC_FN1,
+                  KC_UP,        KC_DOWN, KC_RALT, LSFT(KC_COMM), KC_FN1,
 
                   KC_PGUP, KC_LALT,
                   KC_PGDN,
@@ -189,13 +194,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 3: Specials and macro layer
    *
    * ,--------------------------------------------------.           ,--------------------------------------------------.
-   * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |IJGenAll|
+   * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
    * |        |      |      |IJGenC|IJGeSe| IJTst|      |           |      |      |      |      |      |VIMPST|        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
    * |        |      |IJSrnd|VIMDUP|IJExtC| IJGen|------|           |------|IJTGLV|      |      |      |      |        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-   * |        |      |      |IJCMNT|IJEXTV|IJBCMT|      |           |      |      |IJEXTM|      |      |      |        |
+   * |        |      |      |IJCMNT|IJEXTV|IJBCMT|      |           |      |      |IJEXTM|VISEMI|      |      |        |
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
    *   |      |      |      |IJBACK|IJFWRD|                                       |VIMLNU|VIMLND|      |      |        |
    *   `----------------------------------'                                       `------------------------------------'
@@ -218,7 +223,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___,
                   ___, ___, ___,
                   // right hand
-                  ___,  ___, ___, ___, ___, ___, MACRO_IJ_GENAL,
+                  ___,  ___, ___, ___, ___, ___, ___,
                   ___,  ___, ___, ___, ___, MACRO_VM_PASTE, ___,
                   MACRO_IJ_TGL_T,  ___, ___, ___, ___, ___,
                   ___,  ___, MACRO_IJ_EXT_M, ___, ___, ___, ___,
@@ -227,6 +232,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___,
                   ___, ___, KC_WBAK
                   ),
+  /* Keymap 4: Movement/VIM utility layer
+   *
+   * ,--------------------------------------------------.           ,--------------------------------------------------.
+   * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
+   * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
+   * |        |      |      |      |      |      |      |           |      |VISTRT|VIBTM |VITOP |VIEND |      |        |
+   * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+   * |        |      |      |      |      |      |------|           |------| Left | Down |  Up  |Right |      |        |
+   * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
+   * |        |      |      |      |      |      |      |           |      |      |      |VISEMI|      |      |        |
+   * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
+   *   |      |      |      |      |      |                                       |      |      |      |      |        |
+   *   `----------------------------------'                                       `------------------------------------'
+   *                                        ,-------------.       ,-------------.
+   *                                        |      |      |       |      |      |
+   *                                 ,------|------|------|       |------+------+------.
+   *                                 |      |      |      |       |      |      |      |
+   *                                 |      |      |------|       |------|      |      |
+   *                                 |      |      |      |       |      |      |      |
+   *                                 `--------------------'       `--------------------'
+   */
+  // Specials / Macro layer
+  [MOVE] = KEYMAP(
+                  ___, ___, ___, ___, ___, ___, ___,
+                  ___, ___, ___, ___, ___, ___, ___,
+                  ___, ___, ___, ___, ___, ___,
+                  ___, ___, ___, ___, ___, ___, ___,
+                  ___, ___, ___, ___, ___,
+                  ___, ___,
+                  ___,
+                  ___, ___, ___,
+                  // right hand
+                  ___,  ___, ___, ___, ___, ___, ___,
+                  ___, MACRO_VM_START, MACRO_VM_BTM, MACRO_VM_TOP, MACRO_VM_END, ___, ___,
+                  KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, ___, ___,
+                  ___,  ___, ___, MACRO_VM_SEMI, ___, ___, ___,
+                  ___,  ___, ___, ___, ___,
+                  ___,  ___,
+                  ___,
+                  ___, ___, ___
+                  )
 };
 
 
@@ -251,7 +297,11 @@ enum macro_id {
   VM_LN_DN = 18, // Macro for vim moving line down
   VM_DUPLN = 19, // Macro for vim duplicating current line
   VM_PASTE = 20, // Macro for vim paste
-  IJ_GENAL = 21 // Macro for intellij generate toString and equals/hashcode
+  VM_SEMI = 21, // Macro for vim append semicolon
+  VM_TOP = 22, // Macro for vim append semicolon
+  VM_BTM = 23, // Macro for vim append semicolon
+  VM_START = 24, // Macro for vim append semicolon
+  VM_END = 25, // Macro for vim append semicolon
 };
 
 const uint16_t PROGMEM fn_actions[] = {
@@ -282,16 +332,6 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(ENT), END ) : MACRO_NONE);
   case IJ_GENGS:
     return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(DOWN), T(DOWN), T(DOWN), T(ENT), END ) : MACRO_NONE);
-  case IJ_GENAL:
-    return (event.pressed ? MACRO(D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
-                                  T(DOWN), W(100), T(DOWN), W(100), T(ENT), W(100), T(ENT), W(100),
-                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
-                                  T(DOWN), W(100), T(ENT), W(100), T(ENT), W(100), T(ENT), W(100), T(ENT), W(200),
-                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100), T(DOWN), W(100), T(DOWN), W(100), T(DOWN), W(100),
-                                  T(ENT), W(100), D(LCTRL), W(100), T(A), W(100), U(LCTRL), W(100), T(ENT), W(100),
-                                  D(LALT), W(100), T(INSERT), W(100), U(LALT), W(100),
-                                  T(ENT), W(100), D(LCTRL), W(100), T(A), W(100), U(LCTRL), W(100), T(ENT), W(100),
-                                  END ) : MACRO_NONE);
   case IJ_CMNT:
     return (event.pressed ? MACRO( D(LCTRL), T(PSLS), U(LCTRL), END ) : MACRO_NONE);
   case IJ_BCMNT:
@@ -320,6 +360,16 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
     return (event.pressed ? MACRO( T(ESC), T(Y), T(Y), T(P), END ) : MACRO_NONE);
   case VM_PASTE:
     return (event.pressed ? MACRO( T(ESC), D(LSFT), T(2), T(BSLS), T(P), U(LSFT), END ) : MACRO_NONE);
+  case VM_SEMI:
+    return (event.pressed ? MACRO( T(ESC), D(RALT), T(4), U(RALT), T(A), D(LSFT), T(COMM), U(LSFT), END ) : MACRO_NONE);
+  case VM_TOP:
+    return (event.pressed ? MACRO( T(ESC), T(G), T(G), END ) : MACRO_NONE);
+  case VM_BTM:
+    return (event.pressed ? MACRO( T(ESC), D(LSFT), T(G), T(G), U(LSFT), END ) : MACRO_NONE);
+  case VM_START:
+    return (event.pressed ? MACRO( T(ESC), T(0), END ) : MACRO_NONE);
+  case VM_END:
+    return (event.pressed ? MACRO( T(ESC), D(LSFT), T(A), U(LSFT), T(ESC), END ) : MACRO_NONE);
   }
   return MACRO_NONE;
 };
@@ -354,10 +404,10 @@ void matrix_scan_user(void) {
     case SPEC: // 3
       ergodox_right_led_3_on();
       break;
-      //case 4:
-      //  ergodox_right_led_2_on();
-      //  ergodox_right_led_3_on();
-      //  break;
+    case MOVE: // 4
+      ergodox_right_led_2_on();
+      ergodox_right_led_3_on();
+      break;
       //case 5:
       //  ergodox_right_led_1_on();
       //  ergodox_right_led_3_on();
@@ -377,4 +427,3 @@ void matrix_scan_user(void) {
 void led_set_user(uint8_t led) {
   caps = led & (1 << USB_LED_CAPS_LOCK);
 }
-
