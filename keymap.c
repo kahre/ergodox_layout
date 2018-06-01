@@ -226,7 +226,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___,  ___, ___, ___, ___, ___, ___,
                   ___,  ___, ___, ___, ___, MACRO_VM_PASTE, ___,
                   MACRO_IJ_TGL_T,  ___, ___, ___, ___, ___,
-                  ___,  ___, MACRO_IJ_EXT_M, ___, ___, ___, ___,
+                  ___,  ___, MACRO_IJ_EXT_M, MACRO_VM_SEMI, ___, ___, ___,
                   MACRO_VM_LN_UP,  MACRO_VM_LN_DN, ___, ___, ___,
                   ___,  ___,
                   ___,
