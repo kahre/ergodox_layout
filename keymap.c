@@ -68,7 +68,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
    * |Tab/~L1 |   Q  |   W  |   E  |   R  |   T  | ~L3  |           | ~L3  |   Y  |   U  |   I  |   O  |   P  |   Å    |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-   * |CAPS/~L4|   A  |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |Ö/~L2 | Ä/Cmd  |
+   * |ESC/CTRL|A/~L4 |   S  |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |Ö/~L2 | Ä/Cmd  |
    * |--------+------+------+------+------+------| Hyper|           | Meh  |------+------+------+------+------+--------|
    * | LShift |Z/Ctrl|   X  |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl| '/Rsft |
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -86,15 +86,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Otherwise, it needs KC_*
   [BASE] = LAYOUT_ergodox(  // layer 0 : default
                   // left hand
-                  KC_GRV,          KC_1,         KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
-                  LT(SYMB, KC_TAB),KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
-                  LT(MOVE, KC_CAPSLOCK),KC_A,     KC_S,    KC_D,    KC_F,    KC_G,
-                  KC_LSFT,         CTL_T(KC_Z),  KC_X,    KC_C,    KC_V,    KC_B,   ALL_T(KC_NO),
-                  KC_LALT,         KC_NUBS,      KC_LGUI, KC_LEFT, KC_RGHT,
+                  KC_GRV,          KC_1,          KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
+                  LT(SYMB, KC_TAB),KC_Q,          KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
+                  CTL_T(KC_ESC),   LT(MOVE, KC_A),KC_S,    KC_D,    KC_F,    KC_G,
+                  KC_LSFT,         CTL_T(KC_Z),   KC_X,    KC_C,    KC_V,    KC_B,   ALL_T(KC_NO),
+                  KC_LALT,         KC_NUBS,       KC_LGUI, KC_LEFT, KC_RGHT,
 
                   ALT_T(KC_APP), KC_HOME,
                   KC_DELT,
-                  KC_SPC, KC_BSPC, CTL_T(KC_ESC),
+                  KC_SPC, KC_BSPC, CTL_T(KC_ESC)  ,
 
                   // right hand
                   KC_EQL,       KC_6,    KC_7,    KC_8,    KC_9,              KC_0,             KC_MINS,
@@ -426,4 +426,6 @@ void matrix_scan_user(void) {
 
 void led_set_user(uint8_t led) {
   caps = led & (1 << USB_LED_CAPS_LOCK);
+
 }
+
