@@ -38,29 +38,6 @@
 #define MACRO_VM_START M(24) // Macro for vim append semicolon
 #define MACRO_VM_END M(25) // Macro for vim append semicolon
 
-#ifdef SWAP_HANDS_ENABLE
-      __attribute__ ((weak))
-      // swap-hands action needs a matrix to define the swap
-        const keypos_t hand_swap_config[MATRIX_ROWS][MATRIX_COLS] = {
-        /* Left hand, matrix positions */
-        {{0,13}, {1,13}, {2,13}, {3,13}, {4,13}, {5,13}},
-        {{0,12}, {1,12}, {2,12}, {3,12}, {4,12}, {5,12}},
-        {{0,11}, {1,11}, {2,11}, {3,11}, {4,11}, {5,11}},
-        {{0,10}, {1,10}, {2,10}, {3,10}, {4,10}, {5,10}},
-        {{0,9}, {1,9}, {2,9}, {3,9}, {4,9}, {5,9}},
-        {{0,8}, {1,8}, {2,8}, {3,8}, {4,8}, {5,8}},
-        {{0,7}, {1,7}, {2,7}, {3,7}, {4,7}, {5,7}},
-        /* Right hand, matrix positions */
-        {{0,6}, {1,6}, {2,6}, {3,6}, {4,6}, {5,6}},
-        {{0,5}, {1,5}, {2,5}, {3,5}, {4,5}, {5,5}},
-        {{0,4}, {1,4}, {2,4}, {3,4}, {4,4}, {5,4}},
-        {{0,3}, {1,3}, {2,3}, {3,3}, {4,3}, {5,3}},
-        {{0,2}, {1,2}, {2,2}, {3,2}, {4,2}, {5,2}},
-        {{0,1}, {1,1}, {2,1}, {3,1}, {4,1}, {5,1}},
-        {{0,0}, {1,0}, {2,0}, {3,0}, {4,0}, {5,0}},
-      };
-#endif
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
    *
@@ -132,7 +109,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // SYMBOLS
   [SYMB] = LAYOUT_ergodox(
                   // left hand
-                  ___,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  SH_TG,
+                  ___,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  ___,
                   ___,KC_EXLM,RALT(KC_2), RALT(KC_7), RALT(KC_0), RALT(KC_NUBS),___,
                   ___,KC_HASH,RALT(KC_4), LSFT(KC_8), LSFT(KC_9), MACRO_SE_GRV,
                   ___,KC_PERC,MACRO_SE_CIRC, RALT(KC_8), RALT(KC_9), MACRO_SE_TILD, ___,
@@ -141,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___,
                   ___,___,___,
                   // right hand
-                  SH_TG, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+                  ___, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
                   ___, KC_UP,   KC_7,   KC_8,   KC_9,   KC_PAST, KC_F12,
                   KC_DOWN, KC_4,   KC_5,   KC_6,   KC_PPLS, ___,
                   ___, LSFT(KC_6), KC_1,   KC_2,   KC_3, RALT(KC_MINS), KC_CAPSLOCK,
