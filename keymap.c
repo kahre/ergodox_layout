@@ -84,7 +84,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   // If it accepts an argument (i.e, is a function), it doesn't need KC_.
   // Otherwise, it needs KC_*
-  [BASE] = KEYMAP(  // layer 0 : default
+  [BASE] = LAYOUT_ergodox(  // layer 0 : default
                   // left hand
                   KC_GRV,          KC_1,         KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
                   LT(SYMB, KC_TAB),KC_Q,         KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
@@ -129,7 +129,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 `--------------------'       `--------------------'
    */
   // SYMBOLS
-  [SYMB] = KEYMAP(
+  [SYMB] = LAYOUT_ergodox(
                   // left hand
                   ___,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  SH_TG,
                   ___,KC_EXLM,RALT(KC_2), RALT(KC_7), RALT(KC_0), RALT(KC_NUBS),___,
@@ -171,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 `--------------------'       `--------------------'
    */
   // MEDIA AND MOUSE"
-  [MDIA] = KEYMAP(
+  [MDIA] = LAYOUT_ergodox(
                   KC_PSCR, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   ___,
                   ___, ___, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, ___,
                   ___, KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,
@@ -213,7 +213,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 `--------------------'       `--------------------'
    */
   // Specials / Macro layer
-  [SPEC] = KEYMAP(
+  [SPEC] = LAYOUT_ergodox(
                   ___, ___, ___, ___, ___, ___, ___,
                   ___, ___, ___, MACRO_IJ_GEN_C, MACRO_IJ_GENGS, MACRO_IJ_TEST, ___,
                   ___, ___, MACRO_IJ_SRND, MACRO_VM_DUPLN, MACRO_IJ_EXT_C, MACRO_IJ_GEN_M,
@@ -254,7 +254,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 `--------------------'       `--------------------'
    */
   // Specials / Macro layer
-  [MOVE] = KEYMAP(
+  [MOVE] = LAYOUT_ergodox(
                   ___, ___, ___, ___, ___, ___, ___,
                   ___, ___, ___, ___, ___, ___, ___,
                   ___, ___, ___, ___, ___, ___,
