@@ -38,6 +38,9 @@
 #define MACRO_VM_START M(24) // Macro for vim append semicolon
 #define MACRO_VM_END M(25) // Macro for vim append semicolon
 
+#undef TAPPING_TERM
+#define TAPPING_TERM 300
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
    *
