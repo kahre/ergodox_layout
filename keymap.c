@@ -12,31 +12,31 @@
 #define GAME 5 // game layer
 
 // Custom macro defines
-#define MACRO_SE_GRV   M(1)  // Macro for `
-#define MACRO_SE_CIRC  M(2)  // Macro for ^
-#define MACRO_SE_TILD  M(3)  // Macro for ~
-#define MACRO_IJ_GEN_M M(4)  // Macro intellij for generating methods
-#define MACRO_IJ_GEN_C M(5)  // Macro intellij for generating methods
-#define MACRO_IJ_GENGS M(6)  // Macro intellij for generating methods
-#define MACRO_IJ_CMNT  M(7)  // Macro intellij for comment
-#define MACRO_IJ_BCMNT M(8)  // Macro intellij for block comment
-#define MACRO_IJ_BACK  M(9)  // Macro intellij for going back in the visited history
-#define MACRO_IJ_FRWRD M(10) // Macro intellij for going forward in the visited history
-#define MACRO_IJ_TEST  M(11) // Macro intellij for generating test
-#define MACRO_IJ_TGL_T M(12) // Macro intellij for toggling tool views
-#define MACRO_IJ_SRND  M(13) // Macro intellij for surround with
-#define MACRO_IJ_EXT_M M(14) // Macro intellij for extract method
-#define MACRO_IJ_EXT_V M(15) // Macro intellij for extract variable
-#define MACRO_IJ_EXT_C M(16) // Macro intellij for extract property
-#define MACRO_VM_LN_UP M(17) // Macro vim for moving line up
-#define MACRO_VM_LN_DN M(18) // Macro vim for moving line down
-#define MACRO_VM_DUPLN M(19) // Macro vim for duplicating current line
-#define MACRO_VM_PASTE M(20) // Macro vim paste
-#define MACRO_VM_SEMI M(21) // Macro for vim append semicolon
-#define MACRO_VM_TOP M(22) // Macro for vim append semicolon
-#define MACRO_VM_BTM M(23) // Macro for vim append semicolon
-#define MACRO_VM_START M(24) // Macro for vim append semicolon
-#define MACRO_VM_END M(25) // Macro for vim append semicolon
+#define M_GRV      M(1)  // Macro for `
+#define M_CIRC     M(2)  // Macro for ^
+#define M_TILD     M(3)  // Macro for ~
+#define M_IJ_GEN_M M(4)  // Macro intellij for generating methods
+#define M_IJ_GEN_C M(5)  // Macro intellij for generating constructor 
+#define M_IJ_GENGS M(6)  // Macro intellij for generating getters and setters 
+#define M_IJ_CMNT  M(7)  // Macro intellij for comment
+#define M_IJ_BCMNT M(8)  // Macro intellij for block comment
+#define M_IJ_BACK  M(9)  // Macro intellij for going back in the visited history
+#define M_IJ_FRWRD M(10) // Macro intellij for going forward in the visited history
+#define M_IJ_TEST  M(11) // Macro intellij for generating test
+#define M_IJ_TGL_T M(12) // Macro intellij for toggling tool views
+#define M_IJ_SRND  M(13) // Macro intellij for surround with
+#define M_IJ_EXT_M M(14) // Macro intellij for extract method
+#define M_IJ_EXT_V M(15) // Macro intellij for extract variable
+#define M_IJ_EXT_C M(16) // Macro intellij for extract property
+#define M_VM_LN_UP M(17) // Macro vim for moving line up
+#define M_VM_LN_DN M(18) // Macro vim for moving line down
+#define M_VM_DUPLN M(19) // Macro vim for duplicating current line
+#define M_VM_PASTE M(20) // Macro vim paste
+#define M_VM_SEMI  M(21) // Macro for vim append semicolon
+#define M_VM_TOP   M(22) // Macro for vim go to top 
+#define M_VM_BTM   M(23) // Macro for vim go to bottom
+#define M_VM_START M(24) // Macro for vim go to start of line 
+#define M_VM_END   M(25) // Macro for vim go to end of line 
 
 #undef TAPPING_TERM
 #define TAPPING_TERM 300
@@ -45,13 +45,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
    *
    * ,---------------------------------------------  -------.           ,----------------------------------------------------.
-   * |  Grv   |    1   |   2    |   3  |   4  |   5  | Mute |           |  ´   |   6  |   7  |   8  |   9  |   0    |   +    |
+   * |  Grv   |    1   |    2   |   3  |   4  |   5  | Mute |           |  ´   |   6  |   7  |   8  |   9  |   0    |   +    |
    * |--------+--------+--------+------+------+-------------|           |------+------+------+------+------+--------+--------|
-   * |Tab     |     Q  |   W    |   E  |   R  |   T  | ~SPEC|           | ~GAME|   Y  |   U  |   I  |   O  |   P    |   Å    |
+   * |Tab     |    Q   |    W   |   E  |   R  |   T  | ~SPEC|           | ~GAME|   Y  |   U  |   I  |   O  |   P    |   Å    |
    * |--------+--------+--------+------+------+------|      |           |      |------+------+------+------+--------+--------|
    * |ESC/CTRL|A/~MOVE |S/~SYMB |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |Ö/~MEDIA| Ä/Cmd  |
    * |--------+--------+--------+------+------+------| !SYMB|           | @SYMB|------+------+------+------+--------+--------|
-   * | LShift | Z/Ctrl |   X    |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl  | '/Rsft |
+   * | LShift | Z/Ctrl |    X   |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl  | '/Rsft |
    * `--------+--------+--------+------+------+-------------'           `-------------+------+------+------+--------+--------'
    *   |Alt   |  <|>   | Lgui   | Left | Right|                                       |  Up  | Down | Ralt |   ¨    | ~SYMB|
    *   `--------------------------------------'                                       `------------------------------------'
@@ -67,22 +67,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Otherwise, it needs KC_*
   [BASE] = LAYOUT_ergodox(  // layer 0 : default
                   // left hand
-                  KC_GRV,          KC_1,          KC_2,    KC_3,    KC_4,    KC_5,   KC_MUTE,
-                  KC_TAB,          KC_Q,          KC_W,    KC_E,    KC_R,    KC_T,   MO(SPEC),
-                  CTL_T(KC_ESC),   LT(MOVE, KC_A),LT(SYMB, KC_S),   KC_D,    KC_F,    KC_G,
-                  KC_LSFT,         CTL_T(KC_Z),   KC_X,    KC_C,    KC_V,    KC_B,   TG(SYMB),
-                  KC_LALT,         KC_NUBS,       KC_LGUI, KC_LEFT, KC_RGHT,
+                  KC_GRV,          KC_1,           KC_2,           KC_3,    KC_4,    KC_5,   KC_MUTE,
+                  KC_TAB,          KC_Q,           KC_W,           KC_E,    KC_R,    KC_T,   MO(SPEC),
+                  CTL_T(KC_ESC),   LT(MOVE, KC_A), LT(SYMB, KC_S), KC_D,    KC_F,    KC_G,
+                  KC_LSFT,         CTL_T(KC_Z),    KC_X,           KC_C,    KC_V,    KC_B,   TG(SYMB),
+                  KC_LALT,         KC_NUBS,        KC_LGUI,        KC_LEFT, KC_RGHT,
 
-                  ALT_T(KC_APP), KC_HOME,
-                  KC_DELT,
-                  KC_SPC, KC_BSPC, KC_LCTL  ,
+                                                                               ALT_T(KC_APP), KC_HOME,
+                                                                                              KC_DELT,
+								       KC_SPC,       KC_BSPC, KC_LCTL,
 
-                  // right hand
-                  KC_EQL,       KC_6,    KC_7,    KC_8,    KC_9,              KC_0,             KC_MINS,
-                  DF(GAME),     KC_Y,    KC_U,    KC_I,    KC_O,              KC_P,             KC_LBRC,
-                  KC_H,         KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), RGUI_T(KC_QUOT),
-                  OSL(SYMB), KC_N,    KC_M,    KC_COMM, KC_DOT,            RCTL_T(KC_SLSH),   RSFT_T(KC_BSLS),
-                  KC_UP,        KC_DOWN, KC_RALT, KC_RBRC, KC_FN1,
+
+								       
+		  // right hand
+                  KC_EQL,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,              KC_MINS,
+                  DF(GAME),     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,              KC_LBRC,
+                                KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), RGUI_T(KC_QUOT),
+                  OSL(SYMB),    KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH),   RSFT_T(KC_BSLS),
+                                         KC_UP,   KC_DOWN, KC_RALT, KC_RBRC,           KC_FN1,
 
                   KC_PGUP, KC_LALT,
                   KC_PGDN,
@@ -91,7 +93,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 1: Symbol Layer
    *
    * ,--------------------------------------------------.           ,--------------------------------------------------.
-   * |        |  F1  |  F2  |  F3  |  F4  |  F5  | SWAP |           | SWAP |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
+   * |        |  F1  |  F2  |  F3  |  F4  |  F5  |      |           |      |  F6  |  F7  |  F8  |  F9  |  F10 |   F11  |
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
    * |        |   !  |   @  |   {  |   }  |   |  |      |           |      |   Up |   7  |   8  |   9  |   *  |   F12  |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
@@ -99,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
    * |        |   %  |   ^  |   [  |   ]  |   ~  |      |           |      |   &  |   1  |   2  |   3  |   \  | CAPSLCK|
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
-   *   |      |      |      |      |      |                                       |   ~  |    . |   0  |   =  |      |
+   *   |      |      |      |      |      |                                       |   ~  |   0  |   .  |   =  |      |
    *   `----------------------------------'                                       `----------------------------------'
    *                                        ,-------------.       ,-------------.
    *                                        |      |      |       |      |      |
@@ -112,20 +114,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // SYMBOLS
   [SYMB] = LAYOUT_ergodox(
                   // left hand
-                  ___,KC_F1,  KC_F2,  KC_F3,  KC_F4,  KC_F5,  ___,
-                  ___,KC_EXLM,RALT(KC_2), RALT(KC_7), RALT(KC_0), RALT(KC_NUBS),___,
-                  ___,KC_HASH,RALT(KC_4), LSFT(KC_8), LSFT(KC_9), MACRO_SE_GRV,
-                  ___,KC_PERC,MACRO_SE_CIRC, RALT(KC_8), RALT(KC_9), MACRO_SE_TILD, ___,
-                  ___,___,___,___,___,
-                  ___,___,
-                  ___,
-                  ___,___,___,
-                  // right hand
-                  ___, KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                  ___, KC_UP,   KC_7,   KC_8,   KC_9,   KC_PAST, KC_F12,
-                  KC_DOWN, KC_4,   KC_5,   KC_6,   KC_PPLS, ___,
-                  ___, LSFT(KC_6), KC_1,   KC_2,   KC_3, RALT(KC_MINS), KC_CAPSLOCK,
-                  MACRO_SE_TILD, KC_DOT, KC_0,   KC_EQL, ___,
+                  ___, KC_F1,   KC_F2,      KC_F3,      KC_F4,      KC_F5,         ___,
+                  ___, KC_EXLM, RALT(KC_2), RALT(KC_7), RALT(KC_0), RALT(KC_NUBS), ___,
+                  ___, KC_HASH, RALT(KC_4), LSFT(KC_8), LSFT(KC_9), M_GRV,
+                  ___, KC_PERC, M_CIRC,     RALT(KC_8), RALT(KC_9), M_TILD,        ___,
+                  ___, ___,     ___,        ___,        ___,
+                  
+		                                                              ___, ___,
+                                                                                   ___, 
+                                                                         ___, ___, ___,
+                  
+									 
+		  // right hand
+                  ___, KC_F6,      KC_F7,  KC_F8,  KC_F9,  KC_F10,        KC_F11,
+                  ___, KC_UP,      KC_7,   KC_8,   KC_9,   KC_PAST,       KC_F12,
+                       KC_DOWN,    KC_4,   KC_5,   KC_6,   KC_PPLS,       ___,
+                  ___, LSFT(KC_6), KC_1,   KC_2,   KC_3,   RALT(KC_MINS), KC_CAPSLOCK,
+                                   M_TILD, KC_0,   KC_DOT, KC_EQL,        ___,
+
                   ___, ___,
                   ___,
                   ___, ___, ___
@@ -151,23 +157,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 |      |      |      |       |      |      |      |
    *                                 `--------------------'       `--------------------'
    */
-  // MEDIA AND MOUSE"
+  // MEDIA AND MOUSE
   [MDIA] = LAYOUT_ergodox(
                   KC_PSCR, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   ___,
-                  ___, ___, KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, ___,
-                  ___, KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,
-                  ___, ___, ___, ___, ___, ___, ___,
-                  ___, ___, ___, ___, ___,
-                  ___, ___,
-                  ___,
-                  ___, ___, ___,
-                  // right hand
-                  ___,  KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
-                  ___,  ___, KC_MPLY, KC_VOLU, ___, ___, KC_F12,
-                  ___, KC_MPRV, KC_VOLD, KC_MNXT, ___, ___,
-                  ___,  ___, ___, KC_MUTE, ___, ___, ___,
-                  ___, ___, ___, ___, ___,
-                  ___, ___,
+                  ___,     ___,     KC_BTN1, KC_MS_U, KC_BTN2, KC_WH_U, ___,
+                  ___,     KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,
+                  ___,     ___,     ___,     ___,     ___,     ___,     ___,
+                  ___,     ___,     ___,     ___,     ___,
+                  
+		                                                   ___, ___,
+                                                                        ___,
+                                                              ___, ___, ___,
+                  
+							      
+		  // right hand
+                  ___, KC_F6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
+                  ___, ___,   KC_MPLY, KC_VOLU, ___,     ___,     KC_F12,
+                       ___,   KC_MPRV, KC_VOLD, KC_MNXT, ___,     ___,
+                  ___, ___,   ___,     KC_MUTE, ___,     ___,     ___,
+                              ___,     ___,     ___,     ___,     ___,	
+                  
+		  ___, ___,
                   ___,
                   ___, ___, KC_WBAK
                   ),
@@ -195,21 +205,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   // Specials / Macro layer
   [SPEC] = LAYOUT_ergodox(
-                  ___, ___, ___, ___, ___, ___, ___,
-                  ___, ___, ___, MACRO_IJ_GEN_C, MACRO_IJ_GENGS, MACRO_IJ_TEST, ___,
-                  ___, ___, MACRO_IJ_SRND, MACRO_VM_DUPLN, MACRO_IJ_EXT_C, MACRO_IJ_GEN_M,
-                  ___, ___, ___, MACRO_IJ_CMNT, MACRO_IJ_EXT_V, MACRO_IJ_BCMNT, ___,
-                  ___, ___, ___, MACRO_IJ_BACK, MACRO_IJ_FRWRD,
-                  ___, ___,
-                  ___,
-                  ___, ___, ___,
-                  // right hand
-                  ___,  ___, ___, ___, ___, ___, ___,
-                  ___,  ___, ___, ___, ___, MACRO_VM_PASTE, ___,
-                  MACRO_IJ_TGL_T,  ___, ___, ___, ___, ___,
-                  ___,  ___, MACRO_IJ_EXT_M, MACRO_VM_SEMI, ___, ___, ___,
-                  MACRO_VM_LN_UP,  MACRO_VM_LN_DN, ___, ___, ___,
-                  ___,  ___,
+                  ___, ___, ___,       ___,        ___,        ___,        ___,
+                  ___, ___, ___,       M_IJ_GEN_C, M_IJ_GENGS, M_IJ_TEST,  ___,
+                  ___, ___, M_IJ_SRND, M_VM_DUPLN, M_IJ_EXT_C, M_IJ_GEN_M,
+                  ___, ___, ___,       M_IJ_CMNT,  M_IJ_EXT_V, M_IJ_BCMNT, ___,
+                  ___, ___, ___,       M_IJ_BACK,  M_IJ_FRWRD,
+
+                                                                      ___, ___,
+                                                                           ___,
+                                                                 ___, ___, ___,
+                  
+								 
+		  // right hand
+                  ___, ___,        ___,        ___,        ___, ___,        ___,
+                  ___, ___,        ___,        ___,        ___, M_VM_PASTE, ___,
+                       M_IJ_TGL_T, ___,        ___,        ___, ___,        ___,
+                  ___, ___,        M_IJ_EXT_M, M_VM_SEMI,  ___, ___,        ___,
+                                   M_VM_LN_UP, M_VM_LN_DN, ___, ___,        ___,
+                  
+		  ___, ___,
                   ___,
                   ___, ___, KC_WBAK
                   ),
@@ -241,20 +255,24 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___, ___, ___, ___, ___, ___,
                   ___, ___, ___, ___, ___, ___, ___,
                   ___, ___, ___, ___, ___,
-                  ___, ___,
-                  ___,
-                  ___, ___, ___,
-                  // right hand
-                  ___,  ___, ___, ___, ___, ___, ___,
-                  ___, MACRO_VM_START, MACRO_VM_BTM, MACRO_VM_TOP, MACRO_VM_END, ___, ___,
-                  KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, ___, ___,
-                  ___,  ___, ___, MACRO_VM_SEMI, ___, ___, ___,
-                  ___,  ___, ___, ___, ___,
-                  ___,  ___,
+
+		                           ___, ___,
+ 		                                ___,
+                                      ___, ___, ___,
+                  
+				      
+		  // right hand
+                  ___, ___,        ___,      ___,       ___,      ___, ___,
+                  ___, M_VM_START, M_VM_BTM, M_VM_TOP,  M_VM_END, ___, ___,
+                       KC_LEFT,    KC_DOWN,  KC_UP,     KC_RGHT,  ___, ___,
+                  ___, ___,        ___,      M_VM_SEMI, ___,      ___, ___,
+                                   ___,      ___,       ___,      ___, ___,
+                  
+		  ___, ___,
                   ___,
                   ___, ___, ___
                   ),
-
+  
   /* Keymap 4: Gaming specific base layer, currently not doing much.
    *
    * ,--------------------------------------------------.           ,--------------------------------------------------.
@@ -262,7 +280,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |--------+------+------+------+------+-------------|           |------+------+------+------+------+------+--------|
    * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
-   * |        | A    |  S   |      |      |      |------|           |------|      |      |      |      |      |        |
+   * |        |   A  |   S  |      |      |      |------|           |------|      |      |      |      |      |        |
    * |--------+------+------+------+------+------|      |           |      |------+------+------+------+------+--------|
    * |        |      |      |      |      |      |      |           |      |      |      |      |      |      |        |
    * `--------+------+------+------+------+-------------'           `-------------+------+------+------+------+--------'
@@ -277,21 +295,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                                 `--------------------'       `--------------------'
    */
   [GAME] = LAYOUT_ergodox(
-                  ___, ___, ___, ___, ___, ___, ___,
-                  ___, ___, ___, ___, ___, ___, ___,
+                  ___, ___,  ___,  ___, ___, ___, ___,
+                  ___, ___,  ___,  ___, ___, ___, ___,
                   ___, KC_A, KC_S, ___, ___, ___,
-                  ___, ___, ___, ___, ___, ___, ___,
-                  ___, ___, ___, ___, ___,
-                  ___, ___,
-                  ___,
-                  ___, ___, ___,
-                  // right hand
-                  ___,  ___, ___, ___, ___, ___, ___,
+                  ___, ___,  ___,  ___, ___, ___, ___,
+                  ___, ___,  ___,  ___, ___,
+                  
+		                             ___, ___,
+                                                  ___,
+                                        ___, ___, ___,
+                  
+		  
+		  // right hand
+                  ___,      ___, ___, ___, ___, ___, ___,
                   DF(BASE), ___, ___, ___, ___, ___, ___,
-                  ___, ___, ___, ___, ___, ___,
-                  ___,  ___, ___, ___, ___, ___, ___,
-                  ___,  ___, ___, ___, ___,
-                  ___,  ___,
+                  ___,      ___, ___, ___, ___, ___,
+                  ___,      ___, ___, ___, ___, ___, ___,
+                  ___,      ___, ___, ___, ___,
+                 
+		  ___, ___,
                   ___,
                   ___, ___, ___
                   )
@@ -448,6 +470,5 @@ void matrix_scan_user(void) {
 
 void led_set_user(uint8_t led) {
   caps = led & (1 << USB_LED_CAPS_LOCK);
-
 }
 
