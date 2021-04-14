@@ -1,45 +1,54 @@
 #include "ergodox_ez.h"
-#include "debug.h"
 #include "action_layer.h"
 
 #define ___ KC_TRNS
+//#define D(STUFF) SS_DOWN(STUFF)
+//#define U(STUFF) SS_UP(STUFF)
+//#define T(STUFF) SS_TAP(X_STUFF)
 
-#define BASE 0 // default layer(qwerty)
-#define SYMB 1 // symbols
-#define MDIA 2 // media keys
-#define SPEC 3 // macro layer
-#define MOVE 4 // movement layer
-#define GAME 5 // game layer
+enum layers {
+    BASE, // default layer(qwerty)
+    SYMB, // symbols
+    MDIA, // media keys
+    SPEC, // macro layer
+    MOVE, // movement layer
+    GAME  // game layer
+};
 
-// Custom macro defines
-#define M_GRV      M(1)  // Macro for `
-#define M_CIRC     M(2)  // Macro for ^
-#define M_TILD     M(3)  // Macro for ~
-#define M_IJ_GEN_M M(4)  // Macro intellij for generating methods
-#define M_IJ_GEN_C M(5)  // Macro intellij for generating constructor 
-#define M_IJ_GENGS M(6)  // Macro intellij for generating getters and setters 
-#define M_IJ_CMNT  M(7)  // Macro intellij for comment
-#define M_IJ_BCMNT M(8)  // Macro intellij for block comment
-#define M_IJ_BACK  M(9)  // Macro intellij for going back in the visited history
-#define M_IJ_FRWRD M(10) // Macro intellij for going forward in the visited history
-#define M_IJ_TEST  M(11) // Macro intellij for generating test
-#define M_IJ_TGL_T M(12) // Macro intellij for toggling tool views
-#define M_IJ_SRND  M(13) // Macro intellij for surround with
-#define M_IJ_EXT_M M(14) // Macro intellij for extract method
-#define M_IJ_EXT_V M(15) // Macro intellij for extract variable
-#define M_IJ_EXT_C M(16) // Macro intellij for extract property
-#define M_VM_LN_UP M(17) // Macro vim for moving line up
-#define M_VM_LN_DN M(18) // Macro vim for moving line down
-#define M_VM_DUPLN M(19) // Macro vim for duplicating current line
-#define M_VM_PASTE M(20) // Macro vim paste
-#define M_VM_SEMI  M(21) // Macro for vim append semicolon
-#define M_VM_TOP   M(22) // Macro for vim go to top 
-#define M_VM_BTM   M(23) // Macro for vim go to bottom
-#define M_VM_START M(24) // Macro for vim go to start of line 
-#define M_VM_END   M(25) // Macro for vim go to end of line 
+enum custom_keycodes {
+#ifdef ORYX_CONFIGURATOR
+  SE_GRV = EZ_SAFE_RANGE, // Macro for `
+#else
+  SE_GRV = SAFE_RANGE,
+#endif
+  SE_CIRC,             // Macro for ^
+  SE_TILD,             // Macro for ~
+  IJ_GEN_M,            // Macro for intellij generating methods
+  IJ_GEN_C,            // Macro for intellij generate constructor
+  IJ_GENGS,            // Macro for intellij generate getters/setters
+  IJ_CMNT,             // Macro for intellij comment
+  IJ_BCMNT,            // Macro for intellij block comment
+  IJ_BACK,             // Macro for intellij going back in the visited history
+  IJ_FRWRD,            // Macro for intellij going forward in the visited history
+  IJ_TEST,             // Macro for intellij generating test
+  IJ_TGL_T,            // Macro for intellij toggling tool views
+  IJ_SRND,             // Macro for intellij surround with
+  IJ_EXT_M,            // Macro for intellij extract method
+  IJ_EXT_V,            // Macro for intellij extract variable
+  IJ_EXT_C,            // Macro for intellij extract constant
+  VM_LN_UP,            // Macro for vim moving line up
+  VM_LN_DN,            // Macro for vim moving line down
+  VM_DUPLN,            // Macro for vim duplicating current line
+  VM_PASTE,            // Macro for vim paste
+  VM_SEMI,             // Macro for vim append semicolon
+  VM_TOP,              // Macro for vim append semicolon
+  VM_BTM,              // Macro for vim append semicolon
+  VM_START,            // Macro for vim append semicolon
+  VM_END,              // Macro for vim append semicolon
+};
 
-#undef TAPPING_TERM
-#define TAPPING_TERM 300
+//#undef TAPPING_TERM
+//#define TAPPING_TERM 300
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* Keymap 0: Basic layer
@@ -49,7 +58,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |--------+--------+--------+------+------+-------------|           |------+------+------+------+------+--------+--------|
    * |Tab     |    Q   |    W   |   E  |   R  |   T  | ~SPEC|           | ~GAME|   Y  |   U  |   I  |   O  |   P    |   Å    |
    * |--------+--------+--------+------+------+------|      |           |      |------+------+------+------+--------+--------|
-   * |ESC/CTRL|A/~MOVE |S/~SYMB |   D  |   F  |   G  |------|           |------|   H  |   J  |   K  |   L  |Ö/~MEDIA| Ä/Cmd  |
+   * |ESC/CTRL|A/~MOVE |S/~SYMB |   D  |   F  | G/ALT|------|           |------|   H  |   J  |   K  |   L  |Ö/~MEDIA| Ä/Cmd  |
    * |--------+--------+--------+------+------+------| !SYMB|           | @SYMB|------+------+------+------+--------+--------|
    * | LShift | Z/Ctrl |    X   |   C  |   V  |   B  |      |           |      |   N  |   M  |   ,  |   .  |//Ctrl  | '/Rsft |
    * `--------+--------+--------+------+------+-------------'           `-------------+------+------+------+--------+--------'
@@ -69,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   // left hand
                   KC_GRV,          KC_1,           KC_2,           KC_3,    KC_4,    KC_5,   KC_MUTE,
                   KC_TAB,          KC_Q,           KC_W,           KC_E,    KC_R,    KC_T,   MO(SPEC),
-                  CTL_T(KC_ESC),   LT(MOVE, KC_A), LT(SYMB, KC_S), KC_D,    KC_F,    KC_G,
+                  CTL_T(KC_ESC),   LT(MOVE, KC_A), LT(SYMB, KC_S), KC_D,    KC_F,    ALT_T(KC_G),
                   KC_LSFT,         CTL_T(KC_Z),    KC_X,           KC_C,    KC_V,    KC_B,   TG(SYMB),
                   KC_LALT,         KC_NUBS,        KC_LGUI,        KC_LEFT, KC_RGHT,
 
@@ -78,13 +87,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 								       KC_SPC,       KC_BSPC, KC_LCTL,
 
 
-								       
+
 		  // right hand
                   KC_EQL,       KC_6,    KC_7,    KC_8,    KC_9,    KC_0,              KC_MINS,
                   DF(GAME),     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,              KC_LBRC,
                                 KC_H,    KC_J,    KC_K,    KC_L,    LT(MDIA, KC_SCLN), RGUI_T(KC_QUOT),
                   OSL(SYMB),    KC_N,    KC_M,    KC_COMM, KC_DOT,  RCTL_T(KC_SLSH),   RSFT_T(KC_BSLS),
-                                         KC_UP,   KC_DOWN, KC_RALT, KC_RBRC,           KC_FN1,
+                                         KC_UP,   KC_DOWN, KC_RALT, KC_RBRC,           MO(SYMB),
 
                   KC_PGUP, KC_LALT,
                   KC_PGDN,
@@ -116,21 +125,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   // left hand
                   ___, KC_F1,   KC_F2,      KC_F3,      KC_F4,      KC_F5,         ___,
                   ___, KC_EXLM, RALT(KC_2), RALT(KC_7), RALT(KC_0), RALT(KC_NUBS), ___,
-                  ___, KC_HASH, RALT(KC_4), LSFT(KC_8), LSFT(KC_9), M_GRV,
-                  ___, KC_PERC, M_CIRC,     RALT(KC_8), RALT(KC_9), M_TILD,        ___,
+                  ___, KC_HASH, RALT(KC_4), LSFT(KC_8), LSFT(KC_9), SE_GRV,
+                  ___, KC_PERC, SE_CIRC,     RALT(KC_8), RALT(KC_9), SE_TILD,        ___,
                   ___, ___,     ___,        ___,        ___,
-                  
+
 		                                                              ___, ___,
-                                                                                   ___, 
+                                                                                   ___,
                                                                          ___, ___, ___,
-                  
-									 
+
+
 		  // right hand
                   ___, KC_F6,      KC_F7,  KC_F8,  KC_F9,  KC_F10,        KC_F11,
                   ___, KC_UP,      KC_7,   KC_8,   KC_9,   KC_PAST,       KC_F12,
                        KC_DOWN,    KC_4,   KC_5,   KC_6,   KC_PPLS,       ___,
                   ___, LSFT(KC_6), KC_1,   KC_2,   KC_3,   RALT(KC_MINS), KC_CAPSLOCK,
-                                   KC_0,    KC_0,   KC_DOT, KC_EQL,        M_TILD,
+                                   KC_0,    KC_0,   KC_DOT, KC_EQL,       SE_TILD,
 
                   ___, ___,
                   ___,
@@ -164,19 +173,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                   ___,     KC_BTN3, KC_MS_L, KC_MS_D, KC_MS_R, KC_WH_D,
                   ___,     ___,     ___,     ___,     ___,     ___,     ___,
                   ___,     ___,     ___,     ___,     ___,
-                  
+
 		                                                   ___, ___,
                                                                         ___,
                                                               ___, ___, ___,
-                  
-							      
+
+
 		  // right hand
                   ___, KC_F6, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,
                   ___, ___,   KC_MPLY, KC_VOLU, ___,     ___,     KC_F12,
                        ___,   KC_MPRV, KC_VOLD, KC_MNXT, ___,     ___,
                   ___, ___,   ___,     KC_MUTE, ___,     ___,     ___,
-                              ___,     ___,     ___,     ___,     ___,	
-                  
+                              ___,     ___,     ___,     ___,     ___,
+
 		  ___, ___,
                   ___,
                   ___, ___, KC_WBAK
@@ -206,23 +215,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   // Specials / Macro layer
   [SPEC] = LAYOUT_ergodox(
                   ___, ___, ___,       ___,        ___,        ___,        ___,
-                  ___, ___, ___,       M_IJ_GEN_C, M_IJ_GENGS, M_IJ_TEST,  ___,
-                  ___, ___, M_IJ_SRND, M_VM_DUPLN, M_IJ_EXT_C, M_IJ_GEN_M,
-                  ___, ___, ___,       M_IJ_CMNT,  M_IJ_EXT_V, M_IJ_BCMNT, ___,
-                  ___, ___, ___,       M_IJ_BACK,  M_IJ_FRWRD,
+                  ___, ___, ___,       IJ_GEN_C, IJ_GENGS, IJ_TEST,  ___,
+                  ___, ___, IJ_SRND, VM_DUPLN, IJ_EXT_C, IJ_GEN_M,
+                  ___, ___, ___,       IJ_CMNT,  IJ_EXT_V, IJ_BCMNT, ___,
+                  ___, ___, ___,       IJ_BACK,  IJ_FRWRD,
 
                                                                       ___, ___,
                                                                            ___,
                                                                  ___, ___, ___,
-                  
-								 
+
+
 		  // right hand
                   ___, ___,        ___,        ___,        ___, ___,        ___,
-                  ___, ___,        ___,        ___,        ___, M_VM_PASTE, ___,
-                       M_IJ_TGL_T, ___,        ___,        ___, ___,        ___,
-                  ___, ___,        M_IJ_EXT_M, M_VM_SEMI,  ___, ___,        ___,
-                                   M_VM_LN_UP, M_VM_LN_DN, ___, ___,        ___,
-                  
+                  ___, ___,        ___,        ___,        ___, VM_PASTE, ___,
+                       IJ_TGL_T, ___,        ___,        ___, ___,        ___,
+                  ___, ___,        IJ_EXT_M, VM_SEMI,  ___, ___,        ___,
+                                   VM_LN_UP, VM_LN_DN, ___, ___,        ___,
+
 		  ___, ___,
                   ___,
                   ___, ___, KC_WBAK
@@ -259,20 +268,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		                           ___, ___,
  		                                ___,
                                       ___, ___, ___,
-                  
-				      
+
+
 		  // right hand
                   ___, ___,        ___,      ___,       ___,      ___, ___,
-                  ___, M_VM_START, M_VM_BTM, M_VM_TOP,  M_VM_END, ___, ___,
+                  ___, VM_START, VM_BTM, VM_TOP,  VM_END, ___, ___,
                        KC_LEFT,    KC_DOWN,  KC_UP,     KC_RGHT,  ___, ___,
-                  ___, ___,        ___,      M_VM_SEMI, ___,      ___, ___,
+                  ___, ___,        ___,      VM_SEMI, ___,      ___, ___,
                                    ___,      ___,       ___,      ___, ___,
-                  
+
 		  ___, ___,
                   ___,
                   ___, ___, ___
                   ),
-  
+
   /* Keymap 4: Gaming specific base layer, currently not doing much.
    *
    * ,--------------------------------------------------.           ,--------------------------------------------------.
@@ -297,178 +306,186 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [GAME] = LAYOUT_ergodox(
                   ___, ___,  ___,  ___, ___, ___, ___,
                   ___, ___,  ___,  ___, ___, ___, ___,
-                  ___, KC_A, KC_S, ___, ___, ___,
+                  ___, KC_A, KC_S, ___, ___, KC_G,
                   ___, ___,  ___,  ___, ___, ___, ___,
                   ___, ___,  ___,  ___, ___,
-                  
+
 		                             ___, ___,
                                                   ___,
                                         ___, ___, ___,
-                  
-		  
+
+
 		  // right hand
                   ___,      ___, ___, ___, ___, ___, ___,
                   DF(BASE), ___, ___, ___, ___, ___, ___,
                   ___,      ___, ___, ___, ___, ___,
                   ___,      ___, ___, ___, ___, ___, ___,
                   ___,      ___, ___, ___, ___,
-                 
+
 		  ___, ___,
                   ___,
                   ___, ___, ___
                   )
 };
 
+//const uint16_t PROGMEM fn_actions[] = {
+//  [1] = ACTION_LAYER_MOMENTARY(SYMB),  // FN1 - Momentary Layer 1 (Symbols)
+//};
 
-enum macro_id {
-  SE_GRV   = 1, // Macro for `
-  SE_CIRC  = 2, // Macro for ^
-  SE_TILD  = 3,  // Macro for ~
-  IJ_GEN_M = 4,  // Macro for intellij generating methods
-  IJ_GEN_C = 5,  // Macro for intellij generate constructor
-  IJ_GENGS = 6,  // Macro for intellij generate getters/setters
-  IJ_CMNT  = 7,  // Macro for intellij comment
-  IJ_BCMNT = 8,  // Macro for intellij block comment
-  IJ_BACK  = 9,  // Macro for intellij going back in the visited history
-  IJ_FRWRD = 10, // Macro for intellij going forward in the visited history
-  IJ_TEST  = 11, // Macro for intellij generating test
-  IJ_TGL_T = 12, // Macro for intellij toggling tool views
-  IJ_SRND  = 13, // Macro for intellij surround with
-  IJ_EXT_M = 14, // Macro for intellij extract method
-  IJ_EXT_V = 15, // Macro for intellij extract variable
-  IJ_EXT_C = 16, // Macro for intellij extract constant
-  VM_LN_UP = 17, // Macro for vim moving line up
-  VM_LN_DN = 18, // Macro for vim moving line down
-  VM_DUPLN = 19, // Macro for vim duplicating current line
-  VM_PASTE = 20, // Macro for vim paste
-  VM_SEMI = 21, // Macro for vim append semicolon
-  VM_TOP = 22, // Macro for vim append semicolon
-  VM_BTM = 23, // Macro for vim append semicolon
-  VM_START = 24, // Macro for vim append semicolon
-  VM_END = 25, // Macro for vim append semicolon
-};
-
-const uint16_t PROGMEM fn_actions[] = {
-  [1] = ACTION_LAYER_MOMENTARY(SYMB),  // FN1 - Momentary Layer 1 (Symbols)
-};
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
-{
-  keyevent_t event = record->event;
-  // MACRODOWN only works in this function
-  switch(id) {
-  case 0:
-    if (record->event.pressed) {
-      register_code(KC_RSFT);
-    } else {
-      unregister_code(KC_RSFT);
-    }
-    break;
-  case SE_GRV:
-    return (event.pressed ? MACRO( D(LSFT), T(EQL), T(SPC), U(LSFT),  END ) : MACRO_NONE);
-  case SE_CIRC:
-    return (event.pressed ? MACRO( D(LSFT), T(RBRC), U(LSFT), T(SPC), END ) : MACRO_NONE);
-  case SE_TILD:
-    return (event.pressed ? MACRO( D(RALT), T(RBRC), U(RALT), T(SPC), END ) : MACRO_NONE);
-  case IJ_GEN_M:
-    return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), END ) : MACRO_NONE);
-  case IJ_GEN_C:
-    return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(ENT), END ) : MACRO_NONE);
-  case IJ_GENGS:
-    return (event.pressed ? MACRO( D(LALT), T(INSERT), U(LALT), T(DOWN), T(DOWN), T(DOWN), T(ENT), END ) : MACRO_NONE);
-  case IJ_CMNT:
-    return (event.pressed ? MACRO( D(LCTRL), T(PSLS), U(LCTRL), END ) : MACRO_NONE);
-  case IJ_BCMNT:
-    return (event.pressed ? MACRO( D(LCTRL), D(LSFT), T(PSLS), U(LSFT), U(LCTRL), END ) : MACRO_NONE);
-  case IJ_BACK:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(LEFT), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case IJ_FRWRD:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(RGHT), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case IJ_TEST:
-    return (event.pressed ? MACRO( D(LCTRL), D(LSFT), T(T), U(LCTRL), U(LSFT), END ) : MACRO_NONE);
-  case IJ_TGL_T:
-    return (event.pressed ? MACRO( D(LCTRL), D(LSFT), T(F12), U(LCTRL), U(LSFT), END ) : MACRO_NONE);
-  case IJ_SRND:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(T), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case IJ_EXT_M:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(M), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case IJ_EXT_V:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(V), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case IJ_EXT_C:
-    return (event.pressed ? MACRO( D(LCTRL), D(LALT), T(C), U(LCTRL), U(LALT), END ) : MACRO_NONE);
-  case VM_LN_UP:
-    return (event.pressed ? MACRO( T(ESC), T(D), T(D), T(UP), D(LSFT), T(P), U(LSFT), END ) : MACRO_NONE);
-  case VM_LN_DN:
-    return (event.pressed ? MACRO( T(ESC), T(D), T(D), T(P), END ) : MACRO_NONE);
-  case VM_DUPLN:
-    return (event.pressed ? MACRO( T(ESC), T(Y), T(Y), T(P), END ) : MACRO_NONE);
-  case VM_PASTE:
-    return (event.pressed ? MACRO( T(ESC), D(LSFT), T(2), T(BSLS), T(P), U(LSFT), END ) : MACRO_NONE);
-  case VM_SEMI:
-    return (event.pressed ? MACRO( T(ESC), D(RALT), T(4), U(RALT), T(A), D(LSFT), T(COMM), U(LSFT), END ) : MACRO_NONE);
-  case VM_TOP:
-    return (event.pressed ? MACRO( T(ESC), T(G), T(G), END ) : MACRO_NONE);
-  case VM_BTM:
-    return (event.pressed ? MACRO( T(ESC), D(LSFT), T(G), T(G), U(LSFT), END ) : MACRO_NONE);
-  case VM_START:
-    return (event.pressed ? MACRO( T(ESC), T(0), END ) : MACRO_NONE);
-  case VM_END:
-    return (event.pressed ? MACRO( T(ESC), D(LSFT), T(A), U(LSFT), T(ESC), END ) : MACRO_NONE);
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if(!record->event.pressed)
+        return true;
+    switch(keycode) {
+        case SE_GRV:
+            SEND_STRING( SS_DOWN(X_LSFT) SS_TAP(X_EQL) SS_TAP(X_SPC) SS_UP(X_LSFT)  );
+            return false;
+        case SE_CIRC:
+            SEND_STRING( SS_DOWN(X_LSFT) SS_TAP(X_RBRC) SS_UP(X_LSFT) SS_TAP(X_SPC) );
+            return false;
+        case SE_TILD:
+            SEND_STRING( SS_DOWN(X_RALT) SS_TAP(X_RBRC) SS_UP(X_RALT) SS_TAP(X_SPC) );
+            return false;
+        case IJ_GEN_M:
+            SEND_STRING( SS_DOWN(X_LALT) SS_TAP(X_INSERT) SS_UP(X_LALT) );
+            return false;
+        case IJ_GEN_C:
+            SEND_STRING( SS_DOWN(X_LALT) SS_TAP(X_INSERT) SS_UP(X_LALT) SS_TAP(X_ENT) );
+            return false;
+        case IJ_GENGS:
+            SEND_STRING( SS_DOWN(X_LALT) SS_TAP(X_INSERT) SS_UP(X_LALT) SS_TAP(X_DOWN) SS_TAP(X_DOWN) SS_TAP(X_DOWN) SS_TAP(X_ENT) );
+            return false;
+        case IJ_CMNT:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_TAP(X_PSLS) SS_UP(X_LCTRL) );
+            return false;
+        case IJ_BCMNT:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LSFT) SS_TAP(X_PSLS) SS_UP(X_LSFT) SS_UP(X_LCTRL) );
+            return false;
+        case IJ_BACK:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_LEFT) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case IJ_FRWRD:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_RGHT) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case IJ_TEST:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LSFT) SS_TAP(X_T) SS_UP(X_LCTRL) SS_UP(X_LSFT) );
+            return false;
+        case IJ_TGL_T:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LSFT) SS_TAP(X_F12) SS_UP(X_LCTRL) SS_UP(X_LSFT) );
+            return false;
+        case IJ_SRND:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_T) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case IJ_EXT_M:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_M) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case IJ_EXT_V:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_V) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case IJ_EXT_C:
+            SEND_STRING( SS_DOWN(X_LCTRL) SS_DOWN(X_LALT) SS_TAP(X_C) SS_UP(X_LCTRL) SS_UP(X_LALT) );
+            return false;
+        case VM_LN_UP:
+            SEND_STRING( SS_TAP(X_ESC) SS_TAP(X_D) SS_TAP(X_D) SS_TAP(X_UP) SS_DOWN(X_LSFT) SS_TAP(X_P) SS_UP(X_LSFT) );
+            return false;
+        case VM_LN_DN:
+            SEND_STRING( SS_TAP(X_ESC) SS_TAP(X_D) SS_TAP(X_D) SS_TAP(X_P) );
+            return false;
+        case VM_DUPLN:
+            SEND_STRING( SS_TAP(X_ESC) SS_TAP(X_Y) SS_TAP(X_Y) SS_TAP(X_P) );
+            return false;
+        case VM_PASTE:
+            SEND_STRING( SS_TAP(X_ESC) SS_DOWN(X_LSFT) SS_TAP(X_2) SS_TAP(X_BSLS) SS_TAP(X_P) SS_UP(X_LSFT) );
+            return false;
+        case VM_SEMI:
+            SEND_STRING( SS_TAP(X_ESC) SS_DOWN(X_RALT) SS_TAP(X_4) SS_UP(X_RALT) SS_TAP(X_A) SS_DOWN(X_LSFT) SS_TAP(X_COMM) SS_UP(X_LSFT) );
+            return false;
+        case VM_TOP:
+            SEND_STRING( SS_TAP(X_ESC) SS_TAP(X_G) SS_TAP(X_G) );
+            return false;
+        case VM_BTM:
+            SEND_STRING( SS_TAP(X_ESC) SS_DOWN(X_LSFT) SS_TAP(X_G) SS_TAP(X_G) SS_UP(X_LSFT) );
+            return false;
+        case VM_START:
+            SEND_STRING( SS_TAP(X_ESC) SS_TAP(X_0) );
+            return false;
+        case VM_END:
+            SEND_STRING( SS_TAP(X_ESC) SS_DOWN(X_LSFT) SS_TAP(X_A) SS_UP(X_LSFT) SS_TAP(X_ESC) );
+            return false;
   }
-  return MACRO_NONE;
+  return true;
 };
 
 // Runs just one time when the keyboard initializes.
-void matrix_init_user(void) {
-
+void keyboard_post_init_user(void) {
+#ifdef RGBLIGHT_COLOR_LAYER_0
+  rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+#endif
 };
 
-bool caps = false;
-
-// Runs constantly in the background, in a loop.
-void matrix_scan_user(void) {
-
-  uint8_t layer = biton32(layer_state);
-
+// Runs whenever there is a layer state change.
+layer_state_t layer_state_set_user(layer_state_t state) {
   ergodox_board_led_off();
   ergodox_right_led_1_off();
   ergodox_right_led_2_off();
   ergodox_right_led_3_off();
-  if(caps) {
-    ergodox_right_led_1_on();
-    ergodox_right_led_2_on();
-  } else {
-    switch (layer) {
-    case SYMB: // 1
-      ergodox_right_led_1_on();
-      break;
-    case MDIA: // 2
-      ergodox_right_led_2_on();
-      break;
-    case SPEC: // 3
-      ergodox_right_led_3_on();
-      break;
-    case MOVE: // 4
-      ergodox_right_led_2_on();
-      ergodox_right_led_3_on();
-      break;
-      //case 5:
-      //  ergodox_right_led_1_on();
-      //  ergodox_right_led_3_on();
-      //  break;
-      //case 6:
-      //  ergodox_right_led_1_on();
-      //  ergodox_right_led_2_on();
-      //  ergodox_right_led_3_on();
-      //  break;
-    default:
-      // none
-      break;
+
+  uint8_t layer = get_highest_layer(state);
+  switch (layer) {
+      case 0:
+        #ifdef RGBLIGHT_COLOR_LAYER_0
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_0);
+        #endif
+        break;
+      case 1:
+        ergodox_right_led_1_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_1
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_1);
+        #endif
+        break;
+      case 2:
+        ergodox_right_led_2_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_2
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_2);
+        #endif
+        break;
+      case 3:
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_3
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_3);
+        #endif
+        break;
+      case 4:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_4
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_4);
+        #endif
+        break;
+      case 5:
+        ergodox_right_led_1_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_5
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_5);
+        #endif
+        break;
+      case 6:
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_6
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_6);
+        #endif
+        break;
+      case 7:
+        ergodox_right_led_1_on();
+        ergodox_right_led_2_on();
+        ergodox_right_led_3_on();
+        #ifdef RGBLIGHT_COLOR_LAYER_7
+          rgblight_setrgb(RGBLIGHT_COLOR_LAYER_7);
+        #endif
+        break;
+      default:
+        break;
     }
-  }
+
+  return state;
 };
-
-void led_set_user(uint8_t led) {
-  caps = led & (1 << USB_LED_CAPS_LOCK);
-}
-
